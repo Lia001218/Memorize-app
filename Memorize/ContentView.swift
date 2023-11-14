@@ -9,16 +9,30 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        LazyHStack{
+            CardView(emojie: "😁")
+            CardView(emojie: "☺️")
+            
         }
-        .padding()
+        
+        
     }
 }
 
+struct CardView: View {
+    let emojie: String
+    @State var faceUp: Bool = false
+    var body: some View {
+        ZStack{
+            Rectangle()
+            
+                .fill()
+                .foregroundColor(.orange)
+
+            Text(emojie)
+        }
+    }
+}
 #Preview {
     ContentView()
 }
