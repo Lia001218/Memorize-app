@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+var emojies: [String] = ["😆","😍","🌊", "🤩","😆","😍","🌊", "🤩"]
     var body: some View {
-        LazyHStack{
-            CardView(emojie: "😁")
-            CardView(emojie: "☺️")
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], content: {
+            ForEach(0..<emojies.count){
+                index in CardView(emojie: emojies[index])
+            }
             
-        }
-        
+        })
         
     }
 }
@@ -24,12 +25,18 @@ struct CardView: View {
     @State var faceUp: Bool = false
     var body: some View {
         ZStack{
-            Rectangle()
-            
-                .fill()
-                .foregroundColor(.orange)
-
-            Text(emojie)
+            if faceUp{
+                RoundedRectangle(cornerRadius: 12).foregroundColor(.white)
+                    .border(Color.orange)
+            }
+            else{
+                RoundedRectangle(cornerRadius: 12.0).foregroundColor(.orange)
+            }
+           
+            Text(emojie).font(.largeTitle).opacity(faceUp ? 1: 0 )
+        }
+        .onTapGesture {
+            faceUp.toggle()
         }
     }
 }
