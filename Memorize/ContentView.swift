@@ -8,27 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojies: [String] = ["😆","😍","🌊", "🤩","😆","😍","🌊", "🤩"]
+    @State var emojies: [String] = ["😆","😍", "🤩","😆","😍", "🤩","😃","😅","🥲","🙃","🙂","😉","😌"]
     @State var countCard: Int = 4
     var body: some View {
-        
         VStack {
+            Text("Memorize!")
+            
             ScrollView {
+                Spacer()
                 cards
             }
             Spacer()
             HStack{
                 addMinusButton
                 Spacer()
+                facesThemeButton
+                Spacer()
+                carsThemeButton
+                Spacer()
+                sportsThemeButton
+                Spacer()
                 addPlusButton
-            }
+            }.imageScale(.large)
+            
+            
         }
         .font(.largeTitle)
         .padding()
-        
-        
     }
     var cards: some View{
+       
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], content: {
             ForEach(0..<countCard, id: \.self){
                 index in CardView(emojie: emojies[index])
@@ -36,13 +45,54 @@ struct ContentView: View {
             
         })
     }
+    
     func createButton(count: Int, action_name: String) -> some View{
         Button(action:{
             countCard += count
         }, label: {
             Image(systemName: action_name)
             
-        }).imageScale(.large)
+        })
+        
+    }
+    var carsThemeButton: some View{
+        Button(action:{
+            emojies = ["🚗","🏎️","🛻","🚕","🚓","🚚","🚙","🚑","🚛","🚌","🚒","🚎","🚐","🚔","🚍","🚘","🚖","🛵"].shuffled()
+            
+        },
+               label:{
+            VStack{
+                Image(systemName: "car")
+                Text("Cars").font(.headline)
+            }
+            
+        })
+        
+    }
+    var sportsThemeButton: some View{
+        Button(action:{
+            emojies = ["⚽️","🏀","🎾","🏐","🏈","🥏","⚾️","🏓","🏸","🥅","🥋","🥊","🥍","⛳️"].shuffled()
+        },
+               label:{
+            VStack{
+                Image(systemName: "baseball")
+                Text("Sports").font(.headline)
+            }
+            
+        })
+        
+    }
+    var facesThemeButton: some View{
+        Button(action:{
+            emojies = ["😆","😍", "🤩","😆", "🤩","😃","😅","🥲","🙃","🙂","😉","😌"].shuffled()
+        },
+               label:{
+            VStack{
+                Image(systemName: "face.dashed")
+                Text("face").font(.headline)
+            }
+            
+        })
         
     }
     var addPlusButton: some View{
@@ -61,7 +111,7 @@ struct CardView: View {
         ZStack{
             if faceUp{
                 RoundedRectangle(cornerRadius: 25).foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 25).strokeBorder(lineWidth: /*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
+                RoundedRectangle(cornerRadius: 25).strokeBorder(lineWidth: 5.0)
             }
             else{
                 RoundedRectangle(cornerRadius: 25.0)
@@ -69,8 +119,8 @@ struct CardView: View {
            
             Text(emojie).font(.largeTitle).opacity(faceUp ? 1: 0 )
         }
-        .padding(0.0)
-        .frame(width: 150.0, height: 200.0)
+        .padding(-2)
+        .frame(width: 130.0, height: 200.0)
         .foregroundColor(.orange)
         .onTapGesture {
             faceUp.toggle()
