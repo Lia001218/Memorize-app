@@ -15,8 +15,8 @@ struct MemorizeGame<CardContext> where CardContext: Equatable{
         
         for index in 0..<max(2, numberOfPair){
             let context = cardContextFactory(index)
-            cards.append(Card(context: context))
-            cards.append(Card(context: context))
+            cards.append(Card(id: "\(index)a",context: context))
+            cards.append(Card(id: "\(index)b",context: context))
         }
     }
     func choose(_ card : Card){
@@ -26,7 +26,9 @@ struct MemorizeGame<CardContext> where CardContext: Equatable{
     mutating func shuffle(){
         cards.shuffle() 
     }
-    struct Card: Equatable{
+    struct Card: Equatable, Identifiable{
+        var id: String
+        
         var isFaceUp: Bool = true
         var isMatch : Bool = false
         let context : CardContext
