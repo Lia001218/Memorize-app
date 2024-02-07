@@ -29,7 +29,7 @@ struct MemorizeGame<CardContext> where CardContext: Equatable{
     struct Card: Equatable, Identifiable{
         var id: String
         
-        var isFaceUp: Bool = true
+        var isFaceUp: Bool = false
         var isMatch : Bool = false
         let context : CardContext
 
