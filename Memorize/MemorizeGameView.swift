@@ -8,174 +8,68 @@
 import SwiftUI
 
 struct MemorizeGameView: View {
-    @State var emojies: [String] = ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
-    @State var countCard: Int = .random(in: 2 ... 6)
-    @State var theme = "face"
+    @ObservedObject var viewModel: EmojieMemoryGame
     var body: some View {
         VStack {
             
             Text("Memorize!")
             
             ScrollView{
-//            Spacer()
-            cards
+                //            Spacer()
+                cards
+                    .animation(.default, value: cards)
             }
-               
-            Spacer()
-            HStack {
-                addMinusButton
-                Spacer()
-                facesThemeButton
-                Spacer()
-                carsThemeButton
-                Spacer()
-                sportsThemeButton
-                Spacer()
-                addPlusButton
-            }.imageScale(.large)
-                .foregroundColor(.blue)
+            Button("Shuffle"){
+                viewModel.shuffle()
+                
+            }
+                          
         }
         .font(.largeTitle)
         .padding()
-        .foregroundColor(color)
+        .foregroundColor(.orange)
     }
-    
-    var color: Color {
-        if theme == "face" {
-            return .orange
-        }
-        else if theme == "cars" {
-            return .red
-        }
-        else {
-            return .indigo
-        }
-    }
+
     let estimatedCardHeight: CGFloat = 120
     var cards: some View {
         
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0 ) ], spacing: 0){
-                ForEach(0 ..< countCard, id: \.self) {
-                    index in CardView(emojie: emojies[index], theme: theme)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .padding(4)
-                            
-                    
-//
-                }
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0 ) ], spacing: 0){
+                ForEach(viewModel.cards.indices, id: \.self) {
+                index in CardView( card: viewModel.cards[index])
+                    .aspectRatio(2/3, contentMode: .fit)
+                    .padding(4)
                 
             }
+        }
+                
+    }
         
-    }
-
-//    var gridwidthrectangle: CGFloat{
-//        let screen = UIScreen.main.bounds.size.width
-//        return
-//    }
-    func widthThatBestFits(cardCount: Int) -> CGFloat {
-        var gridW: CGFloat = 85
-        let screenWidth = UIScreen.main.bounds.size.width - 50
-        let spacing: CGFloat = 1
-        let availableWidth = screenWidth - spacing - gridW
-      
-        let column = availableWidth / gridW
-        let calculatedWidth = (availableWidth - (column - 1) * spacing) / column
-       
-        return min(calculatedWidth, gridW)
-    }
-
-
-    func createButton(count: Int, action_name: String) -> some View {
-        Button(action: {
-            countCard += count
-        }, label: {
-            Image(systemName: action_name)
-            
-        })
-    }
-
-    var carsThemeButton: some View {
-        Button(action: {
-                   emojies = ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵","🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵","🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"].shuffled()
-                   theme = "cars"
-                   countCard = Int.random(in: 1 ... 6)
-            
-               },
-               label: {
-                   VStack {
-                       Image(systemName: "car")
-                       Text("Cars").font(.headline)
-                   }
-            
-               })
-    }
-
-    var sportsThemeButton: some View {
-        Button(action: {
-                   emojies = ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"].shuffled()
-                   theme = "sport"
-                   countCard = Int.random(in: 1 ... 6)
-            
-               },
-               label: {
-                   VStack {
-                       Image(systemName: "baseball")
-                       Text("Sports").font(.headline)
-                   }
-            
-               })
-    }
-
-    var facesThemeButton: some View {
-        Button(action: {
-                   emojies = ["😆", "😍", "🤩", "😆", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"].shuffled()
-                   theme = "face"
-                   countCard = Int.random(in: 1 ... 6)
-            
-               },
-               label: {
-                   VStack {
-                       Image(systemName: "face.dashed")
-                       Text("face").font(.headline)
-                   }
-            
-               })
-    }
-
-    var addPlusButton: some View {
-        return createButton(count: +1, action_name: "rectangle.stack.fill.badge.plus").disabled(countCard >= emojies.count)
-    }
-
-    var addMinusButton: some View {
-        return createButton(count: -1, action_name: "rectangle.stack.fill.badge.minus").disabled(countCard == 1)
-    }
 }
 
 struct CardView: View {
-    let emojie: String
-    @State var faceUp: Bool = false
-    let theme: String
+
+    let  card : MemorizeGame<String>.Card
+
     var body: some View {
         ZStack {
             let base = RoundedRectangle(cornerRadius:  12)
             Group{
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text(emojie)
+                Text(card.context)
                     .font(.system(size: 200))
                     .minimumScaleFactor(0.01)
                     .aspectRatio(1, contentMode: .fit)
                 
-            }.opacity(faceUp ? 1 : 0)
+            }.opacity(card.isFaceUp ? 1 : 0)
             base.fill()
-                .opacity(faceUp ? 0 : 1)
+                .opacity(card.isFaceUp ? 0 : 1)
         
-        }.onTapGesture {
-            faceUp.toggle()
         }
+        
     }
 }
     
 #Preview {
-    MemorizeGameView()
+    MemorizeGameView(viewModel: EmojieMemoryGame())
 }
