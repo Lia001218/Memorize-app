@@ -39,6 +39,9 @@ struct MemorizeGameView: View {
                     card in CardView( card: card)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(4)
+                    .onTapGesture {
+                        viewModel.choose(card:  card)
+                    }
                 
             }
         }
@@ -67,7 +70,7 @@ struct CardView: View {
                 .opacity(card.isFaceUp ? 0 : 1)
         
         }
-        
+        .opacity(card.isFaceUp || !card.isMatch ? 1 : 0)
     }
 }
     
