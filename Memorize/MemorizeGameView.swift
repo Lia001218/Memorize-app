@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MemorizeGameView.swift
 //  Memorize
 //
 //  Created by Lia Zerquera on 11/13/23.
@@ -7,18 +7,19 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MemorizeGameView: View {
     @State var emojies: [String] = ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
     @State var countCard: Int = .random(in: 2 ... 6)
     @State var theme = "face"
     var body: some View {
         VStack {
+            
             Text("Memorize!")
             
-//            ScrollView{
+            ScrollView{
 //            Spacer()
             cards
-//            }
+            }
                
             Spacer()
             HStack {
@@ -52,16 +53,19 @@ struct ContentView: View {
     }
     let estimatedCardHeight: CGFloat = 120
     var cards: some View {
-        GeometryReader { geometry  in
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], content: {
+        
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0 ) ], spacing: 0){
                 ForEach(0 ..< countCard, id: \.self) {
-                    index in CardView(emojie: emojies[index], theme: theme).aspectRatio(2/3, contentMode: .fit
-                    )
-//                        .frame(width: min(geometry.size.width / CGFloat(countCard), 120), height: nil)
+                    index in CardView(emojie: emojies[index], theme: theme)
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .padding(4)
+                            
+                    
+//
                 }
                 
-            })
-        }
+            }
+        
     }
 
 //    var gridwidthrectangle: CGFloat{
@@ -157,7 +161,11 @@ struct CardView: View {
             Group{
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text(emojie).font(.largeTitle)
+                Text(emojie)
+                    .font(.system(size: 200))
+                    .minimumScaleFactor(0.01)
+                    .aspectRatio(1, contentMode: .fit)
+                
             }.opacity(faceUp ? 1 : 0)
             base.fill()
                 .opacity(faceUp ? 0 : 1)
@@ -169,5 +177,5 @@ struct CardView: View {
 }
     
 #Preview {
-    ContentView()
+    MemorizeGameView()
 }
