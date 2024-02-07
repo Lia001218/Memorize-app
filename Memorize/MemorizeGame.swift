@@ -19,8 +19,38 @@ struct MemorizeGame<CardContext> where CardContext: Equatable{
             cards.append(Card(id: "\(index)b",context: context))
         }
     }
-    func choose(_ card : Card){
+    var indexOfFaceUpCard : Int? {
+        get{
+            let faceUpIndices = cards.indices.filter{index in cards[index].isFaceUp}
+            return faceUpIndices.count == 1 ? faceUpIndices.first : nil
+            
+        }
+        set{
+            cards.indices.forEach {cards[$0].isFaceUp = (newValue == $0)}
+        }
+    }
+    mutating func choose(_ card : Card){
         
+        if let choose_index = cards.firstIndex(where: {$0.id == card.id}){
+            
+           if !cards[choose_index].isFaceUp && !cards[choose_index].isMatch{
+              
+               if let potencialIndexMatch = indexOfFaceUpCard{
+                   print(potencialIndexMatch)
+                   if cards[choose_index].context == cards[potencialIndexMatch].context{
+                     
+                       cards[choose_index].isMatch = true
+                       cards[potencialIndexMatch].isMatch = true
+                   }
+               }else {
+                   indexOfFaceUpCard = choose_index
+               }
+               cards[choose_index].isFaceUp = true
+               
+           }
+           
+       }
+       
     }
     
     mutating func shuffle(){
