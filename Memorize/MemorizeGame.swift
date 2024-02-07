@@ -6,3 +6,31 @@
 //
 
 import Foundation
+
+struct MemorizeGame<CardContext> where CardContext: Equatable{
+    
+    private (set) var cards : Array<Card>
+    init(numberOfPair : Int, cardContextFactory : (Int) -> CardContext ){
+        cards = []
+        
+        for index in 0..<max(2, numberOfPair){
+            let context = cardContextFactory(index)
+            cards.append(Card(context: context))
+            cards.append(Card(context: context))
+        }
+    }
+    func choose(_ card : Card){
+        
+    }
+    
+    mutating func shuffle(){
+        cards.shuffle() 
+    }
+    struct Card: Equatable{
+        var isFaceUp: Bool = true
+        var isMatch : Bool = false
+        let context : CardContext
+
+    }
+}
+
