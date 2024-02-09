@@ -16,13 +16,12 @@ struct MemorizeGameView: View {
                     Text("Memorize!")
                     Spacer()
                   
-                    NavigationLink(destination: NewGameView()) {
+                    NavigationLink(destination: NewGameView(viewModel: EmojieMemoryGame())) {
                         Text("New Game")
                     }
                 }
         
                 ScrollView {
-                    //            Spacer()
                     cards
                         .animation(.default, value: viewModel.cards)
                 }
@@ -74,5 +73,5 @@ struct CardView: View {
 }
     
 #Preview {
-    MemorizeGameView(viewModel: EmojieMemoryGame(numberOfPair: 5))
+    MemorizeGameView(viewModel: EmojieMemoryGame())
 }
