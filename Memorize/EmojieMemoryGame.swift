@@ -9,7 +9,18 @@ import Foundation
 
 
 class EmojieMemoryGame : ObservableObject{
-    private static let emojie: [String] =  ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
+    var numberOfPair: Int
+    
+    init(numberOfPair: Int?) {
+        if let pair = numberOfPair{
+            self.numberOfPair = pair
+        }
+        else{
+            self.numberOfPair = 3
+        }
+               
+    }
+    private static var emojie: [String] =  ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
     private static let cars : [String] = ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵","🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵","🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"]
     private static let sport : [String] = ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"]
     
@@ -39,5 +50,10 @@ class EmojieMemoryGame : ObservableObject{
     func shuffle(){
         model.shuffle()
 
+    }
+    func reset(){
+        EmojieMemoryGame.emojie.shuffle()
+        model = EmojieMemoryGame.createMemoryGame()
+        
     }
 }

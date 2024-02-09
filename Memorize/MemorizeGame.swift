@@ -30,13 +30,9 @@ struct MemorizeGame<CardContext> where CardContext: Equatable{
         }
     }
     mutating func choose(_ card : Card){
-        
         if let choose_index = cards.firstIndex(where: {$0.id == card.id}){
-            
            if !cards[choose_index].isFaceUp && !cards[choose_index].isMatch{
-              
                if let potencialIndexMatch = indexOfFaceUpCard{
-                   print(potencialIndexMatch)
                    if cards[choose_index].context == cards[potencialIndexMatch].context{
                      
                        cards[choose_index].isMatch = true
