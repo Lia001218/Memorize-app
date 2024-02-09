@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct NewGameView: View {
+		 @ObservedObject var viewModel: EmojieMemoryGame
          var body: some View {
                   VStack {
+						   
                            HStack {
                                     Text("New Game")
                                              .font(.largeTitle)
@@ -34,105 +36,98 @@ struct NewGameView: View {
                                              }
 											 
                                              HStack {
-                                                      DifficultyButtons()
-                                                     
+                                                      VStack {
+                                                               Button(
+                                                                        action: {
+																				 viewModel.difficulty = "Easy"
+                                                                        }) {
+                                                                                 Image(systemName: "circle.fill")
+                                                                                          .frame(width: 25)
+														
+                                                                                 Text("Easy")
+                                                                                 Spacer()
+                                                                        }
+                                                                        .padding()
+                                                               Button(action: {
+																		viewModel.difficulty = "Medium"
+                                                               }) {
+                                                                        Image(systemName: "circle.fill")
+                                                                                 .frame(width: 25)
+											 
+                                                                        Text("Medium")
+                                                                        Spacer()
+                                                               }.padding()
+															   
+                                                               Button(action: {
+																		viewModel.difficulty = "Hard"
+                                                               }) {
+                                                                        Image(systemName: "circle.fill")
+                                                                                 .frame(width: 25)
+														
+                                                                        Text("Hard")
+                                                                        Spacer()
+                                                               }.padding()
+                                                               Spacer()
+                                                      }
+                                                      .font(.title)
                                                       Spacer()
 															   
-                                                      ThemeButtons()
+                                                      VStack {
+                                                               Button(
+                                                                        action: {
+																				 viewModel.theme = "Cars"
+                                                                        }) {
+                                                                                 Image(systemName: "car.circle")
+                                                                                          .frame(width: 25)
+														
+                                                                                 Text("Cars")
+                                                                                 Spacer()
+                                                                        }
+                                                                        .padding()
+                                                               Button(action: {
+																		viewModel.theme = "Emojie"
+                                                               }) {
+                                                                        Image(systemName: "smiley")
+                                                                                 .frame(width: 25)
+											 
+                                                                        Text("Emojis")
+                                                                        Spacer()
+                                                               }.padding()
+															   
+                                                               Button(action: {
+																		viewModel.theme = "Sports"
+                                                               }) {
+                                                                        Image(systemName: "soccerball.circle")
+                                                                                 .frame(width: 25)
+														
+                                                                        Text("Sports")
+                                                                        Spacer()
+                                                               }.padding()
+                                                               Spacer()
+                                                      }.font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
                                              }
                                              Spacer()
                                     }.padding()
                                     Spacer()
                            }
 						   Spacer()
-						   HStack{
-									Spacer()
-									Button("Done"){
-											 print("some")
-									}.padding()
-											 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-						   }
+						   NavigationView(content: {
+									
+									NavigationLink(destination: MemorizeGameView(viewModel: EmojieMemoryGame())) {
+											 Spacer()
+										Text("Done")
+													  .padding()
+													  .font(.largeTitle)
+									}
+						   
+						   })
                   }
+				  
          }
 }
 
-struct DifficultyButtons: View {
-         var body: some View {
-                  VStack {
-                           Button(
-                                    action: {
-                                             print("Hello")
-                                    }) {
-                                             Image(systemName: "circle.fill")
-                                                      .frame(width: 25)
-					
-                                             Text("Easy")
-                                             Spacer()
-                                    }
-                                    .padding()
-                           Button(action: {
-                                    print("Hello")
-                           }) {
-                                    Image(systemName: "circle.fill")
-                                             .frame(width: 25)
-		 
-                                    Text("Medium")
-                                    Spacer()
-                           }.padding()
-						   
-                           Button(action: {
-                                    print("Hello")
-                           }) {
-                                    Image(systemName: "circle.fill")
-                                             .frame(width: 25)
-					
-                                    Text("Hard")
-                                    Spacer()
-                           }.padding()
-                           Spacer()
-                  }
-                  .font(.title)
-         }
-}
 
-struct ThemeButtons: View {
-         var body: some View {
-                  VStack {
-                           Button(
-                                    action: {
-                                             print("Hello")
-                                    }) {
-                                             Image(systemName: "car.circle")
-                                                      .frame(width: 25)
-					
-                                             Text("Cars")
-                                             Spacer()
-                                    }
-                                    .padding()
-                           Button(action: {
-                                    print("Hello")
-                           }) {
-                                    Image(systemName: "smiley")
-                                             .frame(width: 25)
-		 
-                                    Text("Emojis")
-                                    Spacer()
-                           }.padding()
-						   
-                           Button(action: {
-                                    print("Hello")
-                           }) {
-                                    Image(systemName: "soccerball.circle")
-                                             .frame(width: 25)
-					
-                                    Text("Sports")
-                                    Spacer()
-                           }.padding()
-                           Spacer()
-                  }.font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
-         }
-}
 
 #Preview {
-         NewGameView()
+         NewGameView(viewModel: EmojieMemoryGame())
 }
