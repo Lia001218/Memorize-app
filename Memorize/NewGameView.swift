@@ -22,78 +22,114 @@ struct NewGameView: View {
             
                            HStack {
                                     VStack {
-                                            
                                              HStack {
-                                                      VStack {
-															   Text("Difficulty")
-																		.font(.title)
-																		.padding()
-                                                               Button(
-                                                                        action: {
-                                                                                 print("Hello")
-                                                                        }) {
-                                                                                 Image(systemName: "circle.fill")
-														
-                                                                                 Text("Easy")
-                                                                        }
-																		.padding()
-                                                               Button(action: {
-                                                                        print("Hello")
-                                                               }) {
-                                                                        Image(systemName: "circle.fill")
+                                                      Text("Difficulty")
+                                                               .font(.title)
+                                                               .padding()
+                                                      Spacer()
+                                                      Text("Theme")
+                                                               .font(.title)
+                                                               .padding(.vertical)
+                                                      Spacer()
+                                             }
 											 
-                                                                        Text("Medium")
-															   }.padding()
+                                             HStack {
+                                                      DifficultyButtons()
+                                                     
+                                                      Spacer()
 															   
-                                                               Button(action: {
-                                                                        print("Hello")
-                                                               }) {
-                                                                        Image(systemName: "circle.fill")
-														
-                                                                        Text("Hard")
-                                                               }
-                                                               Spacer()
-                                                      }
-                                                      .font(.title)
-													  Spacer()
-															   
-													  VStack {
-															   Text("Theme")
-																		.font(.title)
-																		.padding()
-															   Button(
-																		action: {
-																				 print("Hello")
-																		}) {
-																				 Image(systemName: "car.circle")
-														
-																				 Text("Cars")
-																		}
-																		.padding()
-															   Button(action: {
-																		print("Hello")
-															   }) {
-																		Image(systemName: "smiley")
-											 
-																		Text("Emojis")
-															   }.padding()
-															   
-									  
-															   Button(action: {
-																		print("Hello")
-															   }) {
-																		Image(systemName: "soccerball.circle")
-														
-																		Text("Sports")
-															   }
-															   Spacer()
-													  }.font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                                      ThemeButtons()
                                              }
                                              Spacer()
-                                    }.padding(.horizontal)
+                                    }.padding()
                                     Spacer()
                            }
+						   Spacer()
+						   HStack{
+									Spacer()
+									Button("Done"){
+											 print("some")
+									}.padding()
+											 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+						   }
                   }
+         }
+}
+
+struct DifficultyButtons: View {
+         var body: some View {
+                  VStack {
+                           Button(
+                                    action: {
+                                             print("Hello")
+                                    }) {
+                                             Image(systemName: "circle.fill")
+                                                      .frame(width: 25)
+					
+                                             Text("Easy")
+                                             Spacer()
+                                    }
+                                    .padding()
+                           Button(action: {
+                                    print("Hello")
+                           }) {
+                                    Image(systemName: "circle.fill")
+                                             .frame(width: 25)
+		 
+                                    Text("Medium")
+                                    Spacer()
+                           }.padding()
+						   
+                           Button(action: {
+                                    print("Hello")
+                           }) {
+                                    Image(systemName: "circle.fill")
+                                             .frame(width: 25)
+					
+                                    Text("Hard")
+                                    Spacer()
+                           }.padding()
+                           Spacer()
+                  }
+                  .font(.title)
+         }
+}
+
+struct ThemeButtons: View {
+         var body: some View {
+                  VStack {
+                           Button(
+                                    action: {
+                                             print("Hello")
+                                    }) {
+                                             Image(systemName: "car.circle")
+                                                      .frame(width: 25)
+					
+                                             Text("Cars")
+                                             Spacer()
+                                    }
+                                    .padding()
+                           Button(action: {
+                                    print("Hello")
+                           }) {
+                                    Image(systemName: "smiley")
+                                             .frame(width: 25)
+		 
+                                    Text("Emojis")
+                                    Spacer()
+                           }.padding()
+						   
+                           Button(action: {
+                                    print("Hello")
+                           }) {
+                                    Image(systemName: "soccerball.circle")
+                                             .frame(width: 25)
+					
+                                    Text("Sports")
+                                    Spacer()
+                           }.padding()
+                           Spacer()
+                  }.font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
          }
 }
 
