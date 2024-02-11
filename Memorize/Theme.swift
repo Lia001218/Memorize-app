@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum Theme {
+    case Emoji
+    case Sport
+    case Cars
+}
