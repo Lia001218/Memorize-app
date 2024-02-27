@@ -8,49 +8,70 @@
 import Foundation
 
 struct ThemeGame {
-    var color: String
-    var context: [String]
-    var numberOfPair: Int
-    init() {
-        var randomArray = [1, 2, 3]
-        var select = randomArray.shuffled()[0]
-        var randomPair = [4, 8, 12]
-        self.numberOfPair = randomPair.shuffled()[0]
-        switch select {
-        case 1:
-            self.color = "orange"
-            self.context = ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
-        case 2:
-            self.color = "red"
-            self.context = ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"]
-        case 3:
-            self.color = "blue"
-            self.context = ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"]
-        default:
-            self.color = "orange"
-            self.context = ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
+    var _color: String
+    
+    var color: String{
+        get{
+           return  _color
+        }
+    }
+    var _context: [String]
+    var context: [String]{
+        get{
+            _context
+        }
+    }
+    var _numberOfPair: Int
+    var numberOfPair: Int{
+        get{
+            _numberOfPair
         }
     }
     
-    init(color: String, difficulty: Difficulty) {
-        self.color = color
+    init(color: String?, difficulty: Difficulty?) {
+        self._color = ThemeGame.obtainColor(color: color)
+        self._context = ThemeGame.obtainContext(color: self._color)
+        self._numberOfPair = ThemeGame.obtainNumberOfPair(difficulty: difficulty)
+    }
+
+    static func obtainNumberOfPair(difficulty: Difficulty?) -> Int {
+        if var actuallyDifficulty = difficulty {
+            switch actuallyDifficulty {
+            case .Easy:
+                return 4
+            case .Medium:
+                return 8
+            case .Hard:
+                return 12
+            }
+        }
+        else {
+            var randomPair = [4, 8, 12]
+            return randomPair.shuffled()[0]
+        }
+    }
+
+    static func obtainContext(color: String) -> [String] {
         switch color {
         case "orange":
-            self.context = ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
+            return ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
         case "red":
-            self.context = ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"]
+            return ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"]
         case "blue":
-            self.context = ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"]
+            return ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"]
         default:
-            self.context = ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
+            return ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
         }
-        switch difficulty {
-        case .Easy:
-            self.numberOfPair = 4
-        case .Medium:
-            self.numberOfPair = 8
-        case .Hard:
-            self.numberOfPair = 12
+    }
+
+    static func obtainColor(color: String?) -> String {
+        if var actuallyColor = color {
+            return actuallyColor
+        }
+        else {
+            var randomArray = ["orange", "red", "blue"]
+            var select = randomArray.shuffled()[0]
+            return select
         }
     }
 }

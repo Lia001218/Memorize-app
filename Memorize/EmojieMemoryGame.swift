@@ -8,44 +8,23 @@
 import Foundation
 
 class EmojieMemoryGame: ObservableObject {
-    private var numberOfPair: Int
-    var difficulty: String = "Easy"
-    var theme: String = "Emojie"
-    init() {
-        if difficulty == "Easy"{
-            numberOfPair = 3
-        }else if difficulty == "Medium"{
-            numberOfPair = 8
-        }else {
-            numberOfPair = 15
-        }
-        
+
+    @Published private var model:MemorizeGame<String>
+    init(color: String?, difficulty: Difficulty?) {
+        self.model = EmojieMemoryGame.createMemoryGame(color: color,difficulty: difficulty)
     }
-    private static var emojie: [String] = ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
-    private static var cars: [String] = ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵", "🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵", "🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"]
-    private static var sport: [String] = ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"]
-    
-    private static func createMemoryGame(numberOfPair: Int?) -> MemorizeGame<String> {
-        let number: Int  = (numberOfPair != nil) ? numberOfPair! : 3
-            
-        
-        return MemorizeGame<String>(numberOfPair: number) {
+    private static func createMemoryGame(color : String?,difficulty: Difficulty?) -> MemorizeGame<String> {
+        var theme = ThemeGame(color: color, difficulty: difficulty)
+        return MemorizeGame<String>(theme.numberOfPair) {
             index in
-            if emojie.indices.contains(index) {
-                return emojie[index]
-            }
-            else {
-                return "⁉️"
-            }
+            theme.context[index]
         }
     }
-    
-    @Published private var model = createMemoryGame(numberOfPair: nil)
 
     var cards: [MemorizeGame<String>.Card] {
         return model.cards
     }
-    
+
     func choose(card: MemorizeGame<String>.Card) {
         model.choose(card)
     }
@@ -54,9 +33,5 @@ class EmojieMemoryGame: ObservableObject {
         model.shuffle()
     }
 
-    func reset() {
-        EmojieMemoryGame.emojie.shuffle()
-        
-        model = EmojieMemoryGame.createMemoryGame(numberOfPair: self.numberOfPair)
-    }
+    func reset() {}
 }
