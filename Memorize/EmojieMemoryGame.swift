@@ -14,7 +14,7 @@ class EmojieMemoryGame: ObservableObject {
         self.model = EmojieMemoryGame.createMemoryGame(color: color,difficulty: difficulty)
     }
     private static func createMemoryGame(color : String?,difficulty: Difficulty?) -> MemorizeGame<String> {
-        var theme = ThemeGame(color: color, difficulty: difficulty)
+        let theme = ThemeGame(color: color, difficulty: difficulty)
         return MemorizeGame<String>(theme.numberOfPair) {
             index in
             theme.context[index]

@@ -35,7 +35,7 @@ struct ThemeGame {
     }
 
     static func obtainNumberOfPair(difficulty: Difficulty?) -> Int {
-        if var actuallyDifficulty = difficulty {
+        if let actuallyDifficulty = difficulty {
             switch actuallyDifficulty {
             case .Easy:
                 return 4
@@ -46,7 +46,7 @@ struct ThemeGame {
             }
         }
         else {
-            var randomPair = [4, 8, 12]
+            let randomPair = [4, 8, 12]
             return randomPair.shuffled()[0]
         }
     }
@@ -65,12 +65,12 @@ struct ThemeGame {
     }
 
     static func obtainColor(color: String?) -> String {
-        if var actuallyColor = color {
+        if let actuallyColor = color {
             return actuallyColor
         }
         else {
-            var randomArray = ["orange", "red", "blue"]
-            var select = randomArray.shuffled()[0]
+            let randomArray = ["orange", "red", "blue"]
+            let select = randomArray.shuffled()[0]
             return select
         }
     }
