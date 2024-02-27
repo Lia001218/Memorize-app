@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MemorizeGameView: View {
     @ObservedObject var viewModel: EmojieMemoryGame
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -16,9 +17,9 @@ struct MemorizeGameView: View {
                     Text("Memorize!")
                     Spacer()
                   
-                    NavigationLink(destination: NewGameView(viewModel: EmojieMemoryGame())) {
-                        Text("New Game")
-                    }
+//                    NavigationLink(destination: NewGameView(viewModel: EmojieMemoryGame())) {
+//                        Text("New Game")
+//                    }
                 }
         
                 ScrollView {
@@ -35,7 +36,7 @@ struct MemorizeGameView: View {
         }
     }
 
-    let estimatedCardHeight: CGFloat = 120
+
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
             ForEach(viewModel.cards) {
@@ -73,5 +74,5 @@ struct CardView: View {
 }
     
 #Preview {
-    MemorizeGameView(viewModel: EmojieMemoryGame())
+    MemorizeGameView(viewModel: EmojieMemoryGame(color: nil, difficulty: nil))
 }
