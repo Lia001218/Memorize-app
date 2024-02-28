@@ -17,6 +17,7 @@ struct MemorizeGame<CardContext> where CardContext: Equatable {
             cards.append(Card(id: "\(index)a", context: context))
             cards.append(Card(id: "\(index)b", context: context))
         }
+        cards.shuffle()
     }
 
     var indexOfFaceUpCard: Int? {
@@ -36,7 +37,7 @@ struct MemorizeGame<CardContext> where CardContext: Equatable {
                     if cards[choose_index].context == cards[potencialIndexMatch].context {
                         cards[choose_index].isMatch = true
                         cards[potencialIndexMatch].isMatch = true
-                        self.score = self.score + 10
+                        self.score = self.score + 2
                     }
                 } else {
                     indexOfFaceUpCard = choose_index
