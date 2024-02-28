@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MemorizeGameView: View {
     @ObservedObject var viewModel: EmojieMemoryGame
-
+ 
     var body: some View {
         NavigationView {
             VStack {
@@ -23,6 +23,7 @@ struct MemorizeGameView: View {
                 }
 
                 ScrollView {
+                    
                     cards
                         .animation(.default, value: viewModel.cards)
                 }
@@ -32,7 +33,7 @@ struct MemorizeGameView: View {
             }
             .font(.largeTitle)
             .padding()
-            .foregroundColor(.orange)
+            .foregroundColor(viewModel.color)
         }
     }
 

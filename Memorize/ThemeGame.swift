@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ThemeGame {
-    var _color: String
+    var _color: Color
     
-    var color: String{
+    var color: Color{
         get{
            return  _color
         }
@@ -28,7 +29,7 @@ struct ThemeGame {
         }
     }
     
-    init(color: String?, difficulty: Difficulty?) {
+    init(color: Color?, difficulty: Difficulty?) {
         self._color = ThemeGame.obtainColor(color: color)
         self._context = ThemeGame.obtainContext(color: self._color)
         self._numberOfPair = ThemeGame.obtainNumberOfPair(difficulty: difficulty)
@@ -51,25 +52,25 @@ struct ThemeGame {
         }
     }
 
-    static func obtainContext(color: String) -> [String] {
+    static func obtainContext(color: Color) -> [String] {
         switch color {
-        case "orange":
-            return ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
-        case "red":
-            return ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"]
-        case "blue":
-            return ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"]
+        case .orange:
+            return ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"].shuffled()
+        case .red:
+            return ["🚗", "🏎️", "🛻", "🚕", "🚓", "🚚", "🚙", "🚑", "🚛", "🚌", "🚒", "🚎", "🚐", "🚔", "🚍", "🚘", "🚖", "🛵"].shuffled()
+        case .blue:
+            return ["⚽️", "🏀", "🎾", "🏐", "🏈", "🥏", "⚾️", "🏓", "🏸", "🥅", "🥋", "🥊", "🥍", "⛳️"].shuffled()
         default:
-            return ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"]
+            return ["😆", "😍", "🤩", "😆", "😍", "🤩", "😃", "😅", "🥲", "🙃", "🙂", "😉", "😌"].shuffled()
         }
     }
 
-    static func obtainColor(color: String?) -> String {
+    static func obtainColor(color: Color?) -> Color {
         if let actuallyColor = color {
             return actuallyColor
         }
         else {
-            let randomArray = ["orange", "red", "blue"]
+            let randomArray: [Color] = [.orange, .red, .blue]
             let select = randomArray.shuffled()[0]
             return select
         }

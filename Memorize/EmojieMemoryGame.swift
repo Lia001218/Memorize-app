@@ -6,21 +6,27 @@
 //
 
 import Foundation
+import SwiftUI
 
 class EmojieMemoryGame: ObservableObject {
     @Published private var model: MemorizeGame<String>
-    init(color: String?, difficulty: Difficulty?) {
-        self.model = EmojieMemoryGame.createMemoryGame(color: color, difficulty: difficulty)
+    let theme: ThemeGame
+    init(color: Color?, difficulty: Difficulty?) {
+        self.theme = ThemeGame(color: color, difficulty: difficulty)
+        self.model = EmojieMemoryGame.createMemoryGame(theme.context, theme.numberOfPair)
     }
 
-    private static func createMemoryGame(color: String?, difficulty: Difficulty?) -> MemorizeGame<String> {
-        let theme = ThemeGame(color: color, difficulty: difficulty)
-        return MemorizeGame<String>(theme.numberOfPair) {
+    private static func createMemoryGame(_ context: [String], _ numberOfPair: Int) -> MemorizeGame<String> {
+        
+        return MemorizeGame<String>(numberOfPair) {
             index in
-            theme.context[index]
+            context[index]
         }
     }
-
+    var color: Color{
+        
+        return theme.color
+    }
     var cards: [MemorizeGame<String>.Card] {
         return model.cards
     }
