@@ -9,19 +9,19 @@ import SwiftUI
 
 struct MemorizeGameView: View {
     @ObservedObject var viewModel: EmojieMemoryGame
-    
+
     var body: some View {
         NavigationView {
             VStack {
                 HStack {
                     Text("Memorize!")
                     Spacer()
-                  
+                    Text(String(viewModel.score))
 //                    NavigationLink(destination: NewGameView(viewModel: EmojieMemoryGame())) {
 //                        Text("New Game")
 //                    }
                 }
-        
+
                 ScrollView {
                     cards
                         .animation(.default, value: viewModel.cards)
@@ -35,7 +35,6 @@ struct MemorizeGameView: View {
             .foregroundColor(.orange)
         }
     }
-
 
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
@@ -64,7 +63,7 @@ struct CardView: View {
                     .font(.system(size: 200))
                     .minimumScaleFactor(0.01)
                     .aspectRatio(1, contentMode: .fit)
-                
+
             }.opacity(card.isFaceUp ? 1 : 0)
             base.fill()
                 .opacity(card.isFaceUp ? 0 : 1)
@@ -72,7 +71,7 @@ struct CardView: View {
         .opacity(card.isFaceUp || !card.isMatch ? 1 : 0)
     }
 }
-    
+
 #Preview {
     MemorizeGameView(viewModel: EmojieMemoryGame(color: nil, difficulty: nil))
 }
